@@ -1,22 +1,36 @@
 import React, { Component } from 'react';
-import './App.css';
-
 import { connect } from 'react-redux';
 
+
 class App extends Component {
+
+  addTrack () {
+    this.props.onAddTrack(this.trackInput.value);
+    this.trackInput.value = ''
+  }
+ 
   render() {
     return (
-      <div className="App">
-        <h2>Hello {this.props.user}</h2>
+      <div>
+        <input type="text" ref={(input) => {this.trackInput = input}} />
+        <input type="button" value="Alert the text input" onClick={this.addTrack.bind(this)} />
+        <ul>
+          {this.props.testStore.map((track, index) => 
+            <li key={index}>{track}</li>
+          )}
+        </ul>
       </div>
-    );
-  }
+    )
+  } 
 }
 
-function mapStateToProps(state){
-  return {
-    user: state.userInfo.user
-  }
-}
-
-export default connect(mapStateToProps)(App);
+export default connect(
+  state =>({
+    testStore: state
+  }),
+  dispatch => ({
+      onAddTrack: (trackName) => {
+        dispatch({  type: 'ADD_TRACK', payload: trackName })
+      }
+  })
+)(App);
