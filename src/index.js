@@ -1,24 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
-import { createStore } from 'redux';
-
+import { createStore , applyMiddleware} from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension'; // улучшенный метод для tools
+import thunk from 'redux-thunk';
+ 
 import App from './App';
+import reducers from './reducers';
 
-const initialState = [
-    'Smells  like spirit',
-    'Love yoyu'
-]
-
-
-function playlist(state = initialState, action) {
-    if(action.type === 'ADD_TRACK') {
-        return [...state, action.payload]
-    }
-    return state;
-}
-
-const store = createStore(playlist, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
 
 ReactDOM.render( 
     <Provider store={store}>   

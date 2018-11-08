@@ -1,9 +1,10 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
+import  tracks from './tracks';
+import  playlists from './playlists';
+import  filterTracks from './filterTracks';
 
-import userInfo from './info' 
-
-const rootReducer = combineReducers({
-    userInfo
+export default combineReducers({
+    tracks,
+    playlists,
+    filterTracks
 })
-
-export default rootReducer
